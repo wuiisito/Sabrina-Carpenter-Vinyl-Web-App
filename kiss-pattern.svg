@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="280" height="280" viewBox="0 0 280 280">
+  <defs>
+    <g id="kiss-mark">
+      <!-- Upper lip with cupid's bow -->
+      <path d="M12 3c-1.8 0-3.5 1.3-4.5 2.3C6.3 6.4 4.3 7.6 3 9c-1.2 1.3-1.6 2.7-.8 3.5.8.8 3.2-.3 5.3-.8 2-.5 3.5-.2 4.5.4 1-.6 2.5-.9 4.5-.4 2.1.5 4.5 1.6 5.3.8.8-.8.4-2.2-.8-3.5-1.3-1.4-3.3-2.6-4.5-3.7C15.5 4.3 13.8 3 12 3z"/>
+      <!-- Lower lip with full pout -->
+      <path d="M3.4 13.6c-.8.6-.4 1.9.8 3.1 1.2 1.2 3.6 3.2 6.3 4.1 1.2.5 1.8.5 3 0 2.7-.9 5.1-2.9 6.3-4.1 1.2-1.2 1.6-2.5.8-3.1-1.2 1.2-4 2.8-6.8 3-1 .1-2.6.1-3.6 0-2.8-.2-5.6-1.8-6.8-3z"/>
+      <!-- Realistic lipstick print crease lines -->
+      <path d="M6.8 14.5c.3 1.5.8 2.5 1.2 3.8M12 14.8c0 1.6.1 2.8.2 4.2M16.8 14.5c-.3 1.5-.7 2.5-1.1 3.8M8.5 6.2c.2 1 .5 1.8.7 2.4M15.5 6.2c-.2 1-.5 1.8-.7 2.4" stroke="currentColor" stroke-width="0.75" stroke-linecap="round" fill="none" opacity="0.6"/>
+    </g>
+    <g id="sparkle-star">
+      <path d="M0 -7 C0.6 -1.8 1.8 -0.6 7 0 C1.8 0.6 0.6 1.8 0 7 C-0.6 1.8 -1.8 0.6 -7 0 C-1.8 -0.6 -0.6 -1.8 0 -7 Z"/>
+    </g>
+  </defs>
+
+  <!-- Kiss 1: Main Crimson Kiss (Top-Left) -->
+  <use href="#kiss-mark" transform="translate(65, 65) rotate(-14) scale(1.65) translate(-12, -12)" color="#E63946" fill="#E63946" opacity="0.075"/>
+
+  <!-- Kiss 2: Soft Rose Pink Kiss (Top-Right) -->
+  <use href="#kiss-mark" transform="translate(210, 75) rotate(22) scale(1.35) translate(-12, -12)" color="#F7CCD7" fill="#F7CCD7" opacity="0.06"/>
+
+  <!-- Kiss 3: Warm Honey Butter Kiss (Bottom-Left) -->
+  <use href="#kiss-mark" transform="translate(75, 210) rotate(16) scale(1.4) translate(-12, -12)" color="#FBE4A0" fill="#FBE4A0" opacity="0.05"/>
+
+  <!-- Kiss 4: Deep Red Kiss (Bottom-Right) -->
+  <use href="#kiss-mark" transform="translate(215, 215) rotate(-18) scale(1.75) translate(-12, -12)" color="#E63946" fill="#E63946" opacity="0.08"/>
+
+  <!-- Kiss 5: Petite Center Kiss -->
+  <use href="#kiss-mark" transform="translate(140, 140) rotate(-4) scale(1.25) translate(-12, -12)" color="#E63946" fill="#E63946" opacity="0.065"/>
+
+  <!-- Ambient Micro Starlets -->
+  <use href="#sparkle-star" transform="translate(140, 48) scale(0.9)" fill="#FBE4A0" opacity="0.045"/>
+  <use href="#sparkle-star" transform="translate(30, 140) scale(0.75)" fill="#FFFFFF" opacity="0.04"/>
+  <use href="#sparkle-star" transform="translate(250, 140) scale(0.95)" fill="#FBE4A0" opacity="0.045"/>
+  <use href="#sparkle-star" transform="translate(140, 240) scale(0.8)" fill="#FFFFFF" opacity="0.04"/>
+</svg>

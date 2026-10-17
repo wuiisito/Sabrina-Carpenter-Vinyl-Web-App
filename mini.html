@@ -11,7 +11,13 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: #180E0D;
+      background-color: #180E0D;
+      background-image: 
+        radial-gradient(circle at 80% 20%, rgba(230, 57, 70, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 20% 80%, rgba(251, 228, 160, 0.05) 0%, transparent 45%),
+        url('kiss-pattern.svg');
+      background-repeat: no-repeat, no-repeat, repeat;
+      background-size: 100% 100%, 100% 100%, 220px 220px;
       color: #FDFBF7;
       font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
       width: 100vw;
@@ -52,6 +58,19 @@
       justify-content: center;
       position: relative;
       background: radial-gradient(circle at center, #2C1816 0%, #150C0B 100%);
+    }
+
+    .turntable-box::before {
+      content: '';
+      position: absolute;
+      width: 232px;
+      height: 232px;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, rgba(230, 57, 70, 0.22) 0%, rgba(35, 19, 17, 0.95) 70%), url('kiss-pattern.svg');
+      background-size: auto, 120px 120px;
+      border: 2px solid rgba(251, 228, 160, 0.2);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+      pointer-events: none;
     }
 
     .vinyl-disk {

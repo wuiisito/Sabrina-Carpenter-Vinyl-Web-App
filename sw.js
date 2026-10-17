@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sabrina-vinyl-v1';
+const CACHE_NAME = 'sabrina-vinyl-v2';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -6,6 +6,7 @@ const STATIC_ASSETS = [
   './style.css',
   './app.js',
   './songs_data.js',
+  './kiss-pattern.svg',
   './manifest.json',
   './favicon.png',
   './icons/icon-192.png',
