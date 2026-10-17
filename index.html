@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sabrina Carpenter · Vinyl Player & Instrumental Archive</title>
+
+  <!-- Favicon & PWA Icons -->
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#FBE4A0">
+  <meta name="description"
+    content="Reproductor de vinilo con la discografía instrumental completa de Sabrina Carpenter.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Italiana&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <a class="brand-container" data-route="home">
+      <div class="brand-logo-icon">💋</div>
+      <div class="brand-text-wrap">
+        <span class="brand-title">SABRINA CARPENTER</span>
+        <span class="brand-subtitle">Instrumental Vinyl Room</span>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      <li><a class="nav-link active" data-route="home">Inicio</a></li>
+      <li><a class="nav-link" data-route="player">Tocadiscos Vinilo 💿</a></li>
+      <li><a class="nav-link" data-route="youtube">Bóveda YouTube 📺</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <button class="btn-secondary" id="btn-popout-window" title="Abrir reproductor como ventana flotante">
+        🪟 Mini Ventana
+      </button>
+      <button class="btn-primary" id="btn-install-app" style="display: none;">
+        ✨ Instalar App
+      </button>
+    </div>
+  </nav>
+
+  <!-- App Main Viewport -->
+  <main class="app-viewport">
+
+    <!-- VIEW: HOME -->
+    <section id="view-home" class="view-panel active">
+      <div class="hero-section">
+        <div class="hero-content">
+          <div class="hero-tag">✦ Edición Oficial Instrumental · 82 Canciones</div>
+          <h1 class="hero-title">
+            El Tocadiscos de <span>Sabrina</span>
+          </h1>
+          <p class="hero-description">
+            Disfruta de toda la discografía de Sabrina Carpenter en pistas instrumentales de estudio en alta fidelidad
+            (320 kbps) separadas por IA, presentadas en un elegante reproductor de vinilo vintage.
+          </p>
+          <div class="hero-buttons">
+            <button class="btn-primary" data-route="player">
+              ▶ Abrir Tocadiscos de Vinilo
+            </button>
+            <button class="btn-secondary" data-route="youtube">
+              📺 Ver Enlaces de YouTube (82)
+            </button>
+          </div>
+        </div>
+
+        <div class="hero-vinyl-preview">
+          <div class="hero-sleeve-mockup" data-route="album/short-n-sweet">
+            <div class="hero-sleeve-jacket">
+              <img src="covers/short-n-sweet.png" alt="Short n' Sweet Vinyl Cover">
+            </div>
+            <div class="hero-vinyl-slipout">
+              <div class="hero-vinyl-center">
+                <span>SHORT n' SWEET</span>
+                <span style="font-size: 0.55rem; color: #555;">SIDE A · 33 RPM</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Albums Section Header -->
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Discografía Completa</h2>
+          <p class="section-subtitle">Explora cada época y álbum con su diseño y pistas dedicadas</p>
+        </div>
+      </div>
+
+      <!-- Albums Grid -->
+      <div class="albums-grid" id="home-albums-grid">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- VIEW: VINYL PLAYER -->
+    <section id="view-player" class="view-panel">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Tocadiscos de Vinilo</h2>
+          <p class="section-subtitle">El vinilo de Sabrina en tu escritorio · Audio Instrumental 320 kbps</p>
+        </div>
+        <div>
+          <button class="btn-secondary" id="btn-popout-window-player">
+            🪟 Desacoplar en Ventana Mini
+          </button>
+        </div>
+      </div>
+
+      <div class="player-container">
+        <!-- Turntable Deck (Left) -->
+        <div class="turntable-box">
+          <div class="platter-deck">
+            <div class="vinyl-disk" id="vinyl-disk">
+              <div class="vinyl-label">
+                <img id="vinyl-label-img" src="covers/short-n-sweet.png" alt="Current Album Artwork">
+                <div class="vinyl-spindle"></div>
+              </div>
+            </div>
+
+            <!-- Tonearm Assembly -->
+            <div class="tonearm-assembly">
+              <div class="tonearm-pivot"></div>
+              <div class="tonearm-rod" id="tonearm-rod">
+                <div class="tonearm-rod-bar"></div>
+                <div class="tonearm-headshell">
+                  <div class="tonearm-needle-glow"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Base controls -->
+          <div class="turntable-chassis-controls">
+            <button class="rpm-switch" id="rpm-toggle">
+              <span class="rpm-indicator"></span>
+              <span id="rpm-label">33 RPM</span>
+            </button>
+            <span style="font-size: 0.72rem; color: var(--text-dim); font-weight: 600;">
+              SABRINA HI-FI PHONOGRAPH
+            </span>
+          </div>
+        </div>
+
+        <!-- Player Details & Controls (Right) -->
+        <div class="player-details-panel">
+          <div class="now-playing-tag">
+            <span>💋</span> Sonando Ahora en Vinilo
+          </div>
+
+          <h2 class="player-song-title" id="player-song-title">Taste</h2>
+          <div class="player-album-name" id="player-album-name">Short n' Sweet (2024)</div>
+
+          <!-- Soundwave Visualizer -->
+          <div class="waveform-equalizer" id="equalizer">
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+          </div>
+
+          <!-- Progress Scrubber -->
+          <div class="progress-bar-container">
+            <div class="scrubber-track" id="scrubber-track">
+              <div class="scrubber-fill" id="scrubber-fill"></div>
+            </div>
+            <div class="time-row">
+              <span id="time-current">0:00</span>
+              <span id="time-total">3:21</span>
+            </div>
+          </div>
+
+          <!-- Main Transport Controls -->
+          <div class="player-controls-row">
+            <button class="ctrl-btn" id="btn-shuffle" title="Modo aleatorio">🔀</button>
+            <button class="ctrl-btn" id="btn-prev" title="Canción anterior">⏮</button>
+            <button class="play-main-btn" id="btn-play-main" title="Reproducir / Pausar">▶</button>
+            <button class="ctrl-btn" id="btn-next" title="Siguiente canción">⏭</button>
+            <button class="ctrl-btn" id="btn-repeat" title="Repetir canción">🔁</button>
+          </div>
+
+          <!-- Sub-actions: Volume & Album selector -->
+          <div class="player-subactions-row">
+            <div class="volume-wrapper">
+              <span>🔊</span>
+              <input type="range" class="volume-slider" id="volume-slider" min="0" max="100" value="85">
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span style="font-size: 0.78rem; color: var(--text-dim); font-weight: 600;">Álbum:</span>
+              <select class="album-picker-select" id="player-album-select">
+                <!-- Injected via JavaScript -->
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW: DEDICATED ALBUM PAGE -->
+    <section id="view-album-detail" class="view-panel">
+      <!-- Injected dynamically by showAlbumView() -->
+    </section>
+
+    <!-- VIEW: YOUTUBE VAULT / ARCHIVE -->
+    <section id="view-youtube" class="view-panel">
+      <div class="yt-vault-header">
+        <h2 class="section-title">Bóveda de YouTube</h2>
+        <p class="section-subtitle">
+          Directorio completo de todas las canciones originales de Sabrina Carpenter en YouTube oficial (82 pistas)
+        </p>
+      </div>
+
+      <!-- Search Input -->
+      <input type="text" class="yt-search-input" id="yt-search-input" placeholder="🔍 Buscar canción por nombre...">
+
+      <!-- Filter tabs -->
+      <div class="yt-filter-bar" id="yt-filter-bar">
+        <!-- Injected via JavaScript -->
+      </div>
+
+      <!-- YouTube Cards Grid -->
+      <div class="yt-cards-grid" id="yt-vault-grid">
+        <!-- Injected via JavaScript -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Floating Mini Player Bar -->
+  <div class="floating-mini-bar" id="floating-mini-bar">
+    <div class="floating-mini-art" id="floating-mini-art" title="Ver en el tocadiscos">
+      <img id="floating-mini-img" src="covers/short-n-sweet.png" alt="Mini Artwork">
+    </div>
+    <div class="floating-mini-info" id="floating-mini-info">
+      <div class="floating-mini-title" id="floating-mini-title">Taste</div>
+      <div class="floating-mini-sub" id="floating-mini-sub">Short n' Sweet · Instrumental</div>
+    </div>
+    <div class="floating-mini-ctrls">
+      <button class="ctrl-btn" id="floating-prev-btn" style="width: 36px; height: 36px; font-size: 1.1rem;">⏮</button>
+      <button class="btn-primary" id="floating-play-btn"
+        style="padding: 0.45rem 0.85rem; font-size: 1rem; border-radius: 50%; width: 40px; height: 40px; justify-content: center;">▶</button>
+      <button class="ctrl-btn" id="floating-next-btn" style="width: 36px; height: 36px; font-size: 1.1rem;">⏭</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="songs_data.js"></script>
+  <script src="app.js"></script>
+  <script>
+    document.getElementById('btn-popout-window-player')?.addEventListener('click', () => {
+      window.app?.openMiniWindow();
+    });
+  </script>
+</body>
+
+</html>

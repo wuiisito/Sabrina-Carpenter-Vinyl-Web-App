@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sabrina Mini Player 💋</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #180E0D;
+      color: #FDFBF7;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+      border: 1px solid rgba(251, 228, 160, 0.25);
+    }
+
+    /* Window Header */
+    .mini-header {
+      background: #241412;
+      padding: 0.65rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(251, 228, 160, 0.15);
+      -webkit-app-region: drag;
+    }
+
+    .mini-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #FBE4A0;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Platter Box */
+    .turntable-box {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: radial-gradient(circle at center, #2C1816 0%, #150C0B 100%);
+    }
+
+    .vinyl-disk {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, #111113 0%, #141417 40%, #0d0d0f 70%, #1c1c22 100%);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.85);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .vinyl-disk::before {
+      content: '';
+      position: absolute;
+      inset: 10px;
+      border-radius: 50%;
+      background: repeating-radial-gradient(circle at center, transparent 0, transparent 3px, rgba(255, 255, 255, 0.04) 4px, transparent 5px);
+    }
+
+    .vinyl-disk.spinning {
+      animation: spinVinyl 3s linear infinite;
+    }
+
+    @keyframes spinVinyl {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .vinyl-label {
+      width: 85px;
+      height: 85px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid #FBE4A0;
+      box-shadow: 0 0 10px rgba(0,0,0,0.6);
+      position: relative;
+      z-index: 2;
+    }
+
+    .vinyl-label img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .vinyl-spindle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #ccc;
+      border: 2px solid #222;
+      z-index: 3;
+    }
+
+    /* Tonearm */
+    .tonearm {
+      position: absolute;
+      top: 20px;
+      right: 35px;
+      width: 10px;
+      height: 140px;
+      transform-origin: top center;
+      transform: rotate(0deg);
+      transition: transform 0.8s cubic-bezier(0.34, 1.2, 0.64, 1);
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .tonearm.on-record {
+      transform: rotate(26deg);
+    }
+
+    .tonearm-bar {
+      width: 5px;
+      height: 125px;
+      background: linear-gradient(to right, #eee, #aaa);
+      margin: 0 auto;
+      border-radius: 3px;
+    }
+
+    .tonearm-head {
+      position: absolute;
+      bottom: 0;
+      left: -8px;
+      width: 18px;
+      height: 28px;
+      background: #FBE4A0;
+      border-radius: 4px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    }
+
+    /* Bottom Player Info & Controls */
+    .controls-panel {
+      background: #241412;
+      padding: 1rem 1.25rem;
+      border-top: 1px solid rgba(251, 228, 160, 0.15);
+    }
+
+    .track-meta {
+      text-align: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .track-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #FDFBF7;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .track-album {
+      font-size: 0.75rem;
+      color: #FBE4A0;
+      margin-top: 2px;
+    }
+
+    .scrubber-wrap {
+      margin-bottom: 0.75rem;
+    }
+
+    .scrubber-track {
+      width: 100%;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 9999px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .scrubber-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #FBE4A0, #F7CCD7);
+      border-radius: 9999px;
+    }
+
+    .times-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      color: #9E857E;
+      margin-top: 4px;
+      font-weight: 600;
+    }
+
+    .buttons-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .ctrl-btn {
+      background: none;
+      border: none;
+      color: #FDFBF7;
+      font-size: 1.25rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .ctrl-btn:hover {
+      transform: scale(1.15);
+      color: #FBE4A0;
+    }
+
+    .play-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #FBE4A0, #E8B946);
+      color: #1A0F0E;
+      border: none;
+      font-size: 1.35rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(251, 228, 160, 0.3);
+      transition: transform 0.2s;
+    }
+
+    .play-btn:hover {
+      transform: scale(1.08);
+    }
+
+    /* Selectors */
+    .selectors-row {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .select-custom {
+      flex: 1;
+      background: #180E0D;
+      border: 1px solid rgba(251, 228, 160, 0.2);
+      color: #FDFBF7;
+      padding: 0.35rem 0.55rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      outline: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Window Header -->
+  <div class="mini-header">
+    <div class="mini-title">💋 Sabrina Vinyl Player</div>
+    <span style="font-size: 0.7rem; color: #FBE4A0; font-weight: 700;">33 RPM</span>
+  </div>
+
+  <!-- Turntable Deck -->
+  <div class="turntable-box">
+    <div class="vinyl-disk" id="mini-vinyl">
+      <div class="vinyl-label">
+        <img id="mini-label-img" src="covers/short-n-sweet.png" alt="Cover">
+        <div class="vinyl-spindle"></div>
+      </div>
+    </div>
+
+    <!-- Tonearm -->
+    <div class="tonearm" id="mini-tonearm">
+      <div class="tonearm-bar"></div>
+      <div class="tonearm-head"></div>
+    </div>
+  </div>
+
+  <!-- Controls Panel -->
+  <div class="controls-panel">
+    <div class="track-meta">
+      <div class="track-title" id="mini-track-title">Taste</div>
+      <div class="track-album" id="mini-track-album">Short n' Sweet (2024) · Instrumental</div>
+    </div>
+
+    <div class="scrubber-wrap">
+      <div class="scrubber-track" id="mini-scrubber">
+        <div class="scrubber-fill" id="mini-fill"></div>
+      </div>
+      <div class="times-row">
+        <span id="mini-current">0:00</span>
+        <span id="mini-total">3:21</span>
+      </div>
+    </div>
+
+    <div class="buttons-row">
+      <button class="ctrl-btn" id="mini-prev">⏮</button>
+      <button class="play-btn" id="mini-play">▶</button>
+      <button class="ctrl-btn" id="mini-next">⏭</button>
+    </div>
+
+    <div class="selectors-row">
+      <select class="select-custom" id="mini-album-select"></select>
+      <select class="select-custom" id="mini-track-select"></select>
+    </div>
+  </div>
+
+  <script src="songs_data.js"></script>
+  <script>
+    const albums = window.SABRINA_ALBUMS || [];
+    let currentAlbum = albums[0];
+    let currentTrackIdx = 0;
+    const audio = new Audio();
+
+    const vinyl = document.getElementById('mini-vinyl');
+    const tonearm = document.getElementById('mini-tonearm');
+    const labelImg = document.getElementById('mini-label-img');
+    const trackTitle = document.getElementById('mini-track-title');
+    const trackAlbum = document.getElementById('mini-track-album');
+    const playBtn = document.getElementById('mini-play');
+    const prevBtn = document.getElementById('mini-prev');
+    const nextBtn = document.getElementById('mini-next');
+    const scrubber = document.getElementById('mini-scrubber');
+    const fill = document.getElementById('mini-fill');
+    const curTime = document.getElementById('mini-current');
+    const totTime = document.getElementById('mini-total');
+    const albSelect = document.getElementById('mini-album-select');
+    const trkSelect = document.getElementById('mini-track-select');
+
+    // Populate album select
+    albums.forEach((alb, i) => {
+      const opt = document.createElement('option');
+      opt.value = i;
+      opt.textContent = alb.title;
+      albSelect.appendChild(opt);
+    });
+
+    function populateTracks() {
+      trkSelect.innerHTML = '';
+      currentAlbum.tracks.forEach((t, i) => {
+        const opt = document.createElement('option');
+        opt.value = i;
+        opt.textContent = `${t.numberStr}. ${t.title}`;
+        trkSelect.appendChild(opt);
+      });
+      trkSelect.value = currentTrackIdx;
+    }
+
+    function loadTrack(albumIdx, trackIdx, autoPlay = true) {
+      currentAlbum = albums[albumIdx];
+      currentTrackIdx = trackIdx;
+      const trk = currentAlbum.tracks[currentTrackIdx];
+
+      audio.src = trk.file;
+      audio.load();
+
+      trackTitle.textContent = trk.title;
+      trackAlbum.textContent = `${currentAlbum.title} · Instrumental`;
+      labelImg.src = currentAlbum.cover_image;
+      albSelect.value = albumIdx;
+      populateTracks();
+
+      if (autoPlay) {
+        audio.play().catch(e => console.log('Autoplay blocked:', e));
+      }
+    }
+
+    function setVisualPlaying(playing) {
+      playBtn.textContent = playing ? '❚❚' : '▶';
+      vinyl.classList.toggle('spinning', playing);
+      tonearm.classList.toggle('on-record', playing);
+    }
+
+    function formatTime(sec) {
+      if (isNaN(sec) || sec < 0) return '0:00';
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${m}:${s < 10 ? '0' : ''}${s}`;
+    }
+
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    vinyl.addEventListener('click', () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    prevBtn.addEventListener('click', () => {
+      let idx = currentTrackIdx - 1;
+      if (idx < 0) idx = currentAlbum.tracks.length - 1;
+      loadTrack(albSelect.value, idx, true);
+    });
+
+    nextBtn.addEventListener('click', () => {
+      let idx = (currentTrackIdx + 1) % currentAlbum.tracks.length;
+      loadTrack(albSelect.value, idx, true);
+    });
+
+    albSelect.addEventListener('change', (e) => {
+      loadTrack(parseInt(e.target.value), 0, true);
+    });
+
+    trkSelect.addEventListener('change', (e) => {
+      loadTrack(parseInt(albSelect.value), parseInt(e.target.value), true);
+    });
+
+    scrubber.addEventListener('click', (e) => {
+      if (!audio.duration) return;
+      const rect = scrubber.getBoundingClientRect();
+      const pos = (e.clientX - rect.left) / rect.width;
+      audio.currentTime = pos * audio.duration;
+    });
+
+    audio.addEventListener('play', () => setVisualPlaying(true));
+    audio.addEventListener('pause', () => setVisualPlaying(false));
+    audio.addEventListener('ended', () => {
+      let idx = (currentTrackIdx + 1) % currentAlbum.tracks.length;
+      loadTrack(albSelect.value, idx, true);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      if (!audio.duration) return;
+      const pct = (audio.currentTime / audio.duration) * 100;
+      fill.style.width = `${pct}%`;
+      curTime.textContent = formatTime(audio.currentTime);
+      totTime.textContent = formatTime(audio.duration);
+    });
+
+    // Initialize
+    loadTrack(0, 0, false);
+  </script>
+</body>
+</html>
