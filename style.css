@@ -895,7 +895,6 @@ h1, h2, h3, h4 {
   background: none;
   border: none;
   color: #FFFFFF;
-  font-size: 1.35rem;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -906,6 +905,12 @@ h1, h2, h3, h4 {
   transition: var(--transition-bounce);
 }
 
+.ctrl-btn svg {
+  display: block;
+  pointer-events: none;
+  transition: transform 0.2s ease;
+}
+
 .ctrl-btn:hover {
   color: var(--butter-yellow);
   background: rgba(251, 228, 160, 0.12);
@@ -914,6 +919,8 @@ h1, h2, h3, h4 {
 
 .ctrl-btn.active {
   color: var(--butter-yellow);
+  background: rgba(251, 228, 160, 0.18);
+  box-shadow: 0 0 14px var(--butter-glow);
 }
 
 .play-main-btn {
@@ -923,13 +930,22 @@ h1, h2, h3, h4 {
   background: linear-gradient(135deg, var(--butter-yellow) 0%, #E8B946 100%);
   color: #1A0F0E;
   border: none;
-  font-size: 1.75rem;
   cursor: pointer;
   box-shadow: 0 10px 25px rgba(251, 228, 160, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
   transition: var(--transition-bounce);
+}
+
+.play-main-btn svg {
+  display: block;
+  fill: #1A0F0E;
+  pointer-events: none;
+}
+
+.play-main-btn .icon-play {
+  margin-left: 3px;
 }
 
 .play-main-btn:hover {

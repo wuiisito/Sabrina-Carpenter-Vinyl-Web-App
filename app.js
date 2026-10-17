@@ -107,7 +107,7 @@ class SabrinaApp {
             this.vinylDisk.classList.remove('rpm-45');
           }
         }
-        this.showToast(`Velocidad ajustada a ${this.rpm} RPM ⚡`);
+        this.showToast(`Velocidad ajustada a ${this.rpm} RPM`);
       });
     }
 
@@ -116,14 +116,14 @@ class SabrinaApp {
       this.shuffleBtn.addEventListener('click', () => {
         this.isShuffle = !this.isShuffle;
         this.shuffleBtn.classList.toggle('active', this.isShuffle);
-        this.showToast(this.isShuffle ? 'Modo Aleatorio Activado 🔀' : 'Modo Secuencial 🔁');
+        this.showToast(this.isShuffle ? 'Modo Aleatorio: Activado' : 'Modo Secuencial');
       });
     }
     if (this.repeatBtn) {
       this.repeatBtn.addEventListener('click', () => {
         this.isRepeat = !this.isRepeat;
         this.repeatBtn.classList.toggle('active', this.isRepeat);
-        this.showToast(this.isRepeat ? 'Repetir Canción Activado 🔂' : 'Repetición Desactivada');
+        this.showToast(this.isRepeat ? 'Repetir Canción: Activado' : 'Repetición Desactivada');
       });
     }
 
@@ -209,7 +209,7 @@ class SabrinaApp {
       console.warn('Audio local fallback triggered:', e);
       const track = this.getCurrentTrack();
       if (track) {
-        this.showToast(`Pista instrumental: ${track.title} 🎵`);
+        this.showToast(`Pista instrumental: ${track.title}`);
       }
     });
   }
@@ -257,7 +257,7 @@ class SabrinaApp {
     if (this.audio.paused) {
       this.audio.play().then(() => {
         const track = this.getCurrentTrack();
-        if (track) this.showToast(`💋 Tocando: ${track.title}`);
+        if (track) this.showToast(`Reproduciendo: ${track.title}`);
       }).catch(err => console.log('Playback error:', err));
     } else {
       this.audio.pause();
@@ -294,8 +294,13 @@ class SabrinaApp {
   }
 
   updatePlayerVisuals(playing) {
-    if (this.playBtn) this.playBtn.innerHTML = playing ? '❚❚' : '▶';
-    if (this.floatingPlayBtn) this.floatingPlayBtn.innerHTML = playing ? '❚❚' : '▶';
+    const svgPlayMain = '<svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" class="icon-play"><path d="M8 5v14l11-7z"/></svg>';
+    const svgPauseMain = '<svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" class="icon-pause"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+    const svgPlayMini = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" class="icon-play" style="margin-left: 2px;"><path d="M8 5v14l11-7z"/></svg>';
+    const svgPauseMini = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" class="icon-pause"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+
+    if (this.playBtn) this.playBtn.innerHTML = playing ? svgPauseMain : svgPlayMain;
+    if (this.floatingPlayBtn) this.floatingPlayBtn.innerHTML = playing ? svgPauseMini : svgPlayMini;
 
     if (this.vinylDisk) {
       if (playing) {
@@ -405,7 +410,9 @@ class SabrinaApp {
         <div class="album-info-sub">${alb.era}</div>
         <p class="album-info-desc">${alb.desc}</p>
         <div class="album-card-footer">
-          <span class="album-track-count">🎵 ${alb.tracks.length} instrumentales</span>
+          <span class="album-track-count" style="display:inline-flex; align-items:center; gap:0.35rem;">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>${alb.tracks.length} instrumentales
+          </span>
           <button class="btn-secondary" style="padding: 0.35rem 0.8rem; font-size: 0.78rem;">Ver Álbum →</button>
         </div>
       `;
@@ -448,11 +455,11 @@ class SabrinaApp {
           <div class="album-hero-quote">"${alb.quote}"</div>
           <p class="album-hero-desc">${alb.desc}</p>
           <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
-            <button class="btn-primary" id="btn-play-whole-album">
-              ▶ Tocar Álbum en el Vinilo
+            <button class="btn-primary" id="btn-play-whole-album" style="display:inline-flex; align-items:center; gap:0.5rem;">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Tocar Álbum en el Vinilo
             </button>
-            <button class="btn-secondary" id="btn-yt-album-search">
-              📺 Ver en YouTube
+            <button class="btn-secondary" id="btn-yt-album-search" style="display:inline-flex; align-items:center; gap:0.5rem;">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.8 31.8 0 0 0 0 12a31.8 31.8 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.5 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>Ver en YouTube
             </button>
           </div>
         </div>
@@ -497,7 +504,9 @@ class SabrinaApp {
       row.innerHTML = `
         <div class="track-number">${trk.numberStr}</div>
         <div class="track-title-cell">
-          <button class="track-play-inline-btn" title="Tocar instrumental">▶</button>
+          <button class="track-play-inline-btn" title="Tocar instrumental">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" style="margin-left: 2px;"><path d="M8 5v14l11-7z"/></svg>
+          </button>
           <span class="track-name-text">${trk.title}</span>
         </div>
         <div>
@@ -505,7 +514,7 @@ class SabrinaApp {
         </div>
         <div>
           <a class="track-yt-link" href="${trk.youtube}" target="_blank" rel="noopener noreferrer">
-            ▶ YouTube
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" style="display:inline-block; vertical-align:middle; margin-right:3px;"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.8 31.8 0 0 0 0 12a31.8 31.8 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.5 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>YouTube
           </a>
         </div>
       `;
@@ -577,19 +586,21 @@ class SabrinaApp {
           card.className = 'yt-card';
           card.innerHTML = `
             <div class="yt-card-header">
-              <span class="yt-icon-badge">▶</span>
+              <span class="yt-icon-badge" style="display:flex; align-items:center;">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.8 31.8 0 0 0 0 12a31.8 31.8 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.5 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
+              </span>
               <span class="yt-card-album-tag">${alb.title}</span>
             </div>
             <div class="yt-card-title">${trk.title}</div>
-            <div style="font-size: 0.8rem; color: var(--text-dim); margin-bottom: 0.85rem;">
+            <div style="font-size: 0.82rem; color: var(--text-dim); margin-bottom: 0.85rem;">
               Audio oficial & letra en YouTube
             </div>
             <div class="yt-card-actions">
-              <a href="${trk.youtube}" target="_blank" rel="noopener noreferrer" class="btn-primary" style="padding: 0.4rem 0.85rem; font-size: 0.78rem;">
-                Ver en YouTube ↗
+              <a href="${trk.youtube}" target="_blank" rel="noopener noreferrer" class="btn-primary" style="padding: 0.45rem 0.95rem; font-size: 0.82rem; display:inline-flex; align-items:center; gap:0.4rem;">
+                Ver en YouTube <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
               </a>
-              <button class="btn-secondary btn-play-inst" style="padding: 0.4rem 0.85rem; font-size: 0.78rem;">
-                Tocar Instrumental 🎵
+              <button class="btn-secondary btn-play-inst" style="padding: 0.45rem 0.95rem; font-size: 0.82rem; display:inline-flex; align-items:center; gap:0.4rem;">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Tocar Instrumental
               </button>
             </div>
           `;
@@ -604,7 +615,7 @@ class SabrinaApp {
       });
 
       if (matchCount === 0) {
-        container.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; color: var(--text-dim); padding: 3rem;">No se encontraron canciones con "${searchQuery}" 🔍</div>`;
+        container.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; color: var(--text-dim); padding: 3rem;">No se encontraron canciones con "${searchQuery}"</div>`;
       }
     };
 
@@ -628,7 +639,7 @@ class SabrinaApp {
       'SabrinaMiniPlayer',
       `width=${width},height=${height},left=${left},top=${top},resizable=no,scrollbars=no,status=no,toolbar=no`
     );
-    this.showToast('¡Mini ventana de escritorio abierta! 🪟✨');
+    this.showToast('¡Mini ventana de escritorio abierta!');
   }
 
   initPWA() {
@@ -649,7 +660,7 @@ class SabrinaApp {
           deferredPrompt.prompt();
           deferredPrompt.userChoice.then((choiceResult) => {
             if (choiceResult.outcome === 'accepted') {
-              this.showToast('¡App instalada en tu escritorio con éxito! 💖');
+              this.showToast('¡App instalada en tu escritorio con éxito!');
             }
             deferredPrompt = null;
           });
